@@ -164,7 +164,6 @@ input {
     /* tamanho bom pro checkbox */
     height: 18px;
     accent-color: #ff3b30;
-    /* cor do check quando marcado (vermelho/laranja do seu tema) */
     cursor: pointer;
 }
 
