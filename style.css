@@ -1,0 +1,243 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #fff5ef;
+    /* fundo claro como na foto */
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: row;
+    /* lado a lado em desktop */
+}
+
+/* LADO ESQUERDO - PROMOCIONAL (igual à foto da esquerda) */
+.left {
+    width: 45%;
+    background: #f7e6dd;
+    /* mesmo fundo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* centraliza vertical */
+    align-items: center;
+    /* centraliza horizontal */
+    padding: 40px;
+    text-align: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.icon {
+    width: 90px;
+    /* um pouco maior, como na foto */
+    height: 90px;
+    background: linear-gradient(135deg, #ff3b30, #ff6a00);
+    /* gradiente laranja/vermelho */
+    border-radius: 50%;
+    color: white;
+    font-size: 70px;
+    /* relógio maior */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(255, 59, 48, 0.3);
+    /* sombra suave pra destacar */
+}
+
+.left h1 {
+    color: #ff3b30;
+    font-size: 48px;
+    /* maior e impactante */
+    font-weight: bold;
+}
+
+.subtitle {
+    margin: 20px 0 40px;
+    color: #555;
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 80%;
+}
+
+/* Cards de stats - centralizados e bonitos */
+.stats {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    min-width: 120px;
+    text-align: center;
+}
+
+.card strong {
+    display: block;
+    font-size: 32px;
+    color: #ff3b30;
+    margin-bottom: 6px;
+}
+
+.card span {
+    font-size: 14px;
+    color: #777;
+}
+
+/* LADO DIREITO - FORMULÁRIO */
+.right {
+    width: 55%;
+    background: white;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right h2 {
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.right p {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 16px;
+}
+
+/* Formulário (mantém o seu, só ajusta um pouco) */
+form label {
+    display: block;
+    margin: 20px 0 8px;
+    font-size: 14px;
+    color: #444;
+    font-weight: 500;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.row a {
+    color: #ff3b30;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.checkbox input[type="checkbox"] {
+    width: 18px;
+    /* tamanho bom pro checkbox */
+    height: 18px;
+    accent-color: #ff3b30;
+    /* cor do check quando marcado (vermelho/laranja do seu tema) */
+    cursor: pointer;
+}
+
+.btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #ff3b30, #ff6a00);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 35px;
+    transition: opacity 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.divider {
+    text-align: center;
+    margin: 25px 0;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.social {
+    display: flex;
+    gap: 15px;
+}
+
+.social button {
+    flex: 1;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 15px;
+    color: #555;
+}
+
+.footer a {
+    color: #ff3b30;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* PARA QUANDO DIMINUIR A TELA, O LADO ESQUERDO FICAR EM CIMA 
+E O DIREITO IR PARA BAIXO - RESPONSIVIDADE*/
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left,
+    .right {
+        width: 100%;
+        padding: 40px 20px;
+    }
+
+    .left {
+        padding-top: 60px;
+    }
+}
