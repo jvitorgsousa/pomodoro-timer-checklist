@@ -7,7 +7,6 @@
 
 body {
     background: #fff5ef;
-    /* fundo claro como na foto */
     min-height: 100vh;
 }
 
@@ -72,7 +71,6 @@ body {
     max-width: 80%;
 }
 
-/* Cards de stats - centralizados e bonitos */
 .stats {
     display: flex;
     gap: 20px;
