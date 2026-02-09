@@ -4,7 +4,7 @@ const reset = document.getElementById("timer-reset");
 const stop = document.getElementById("timer-stop");
 const timer = document.querySelector(".timer");
 
-let tempoRestante = 10;
+let tempoRestante = 1500;
 let intervalo = null;
 
 function updateTimer() {
