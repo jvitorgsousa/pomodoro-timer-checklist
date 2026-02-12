@@ -3,9 +3,30 @@ const start = document.getElementById("timer-start");
 const reset = document.getElementById("timer-reset");
 const stop = document.getElementById("timer-stop");
 const timer = document.querySelector(".timer");
+const plus = document.getElementById("timer-plus");
+const min = document.getElementById("timer-min");
 
 let tempoRestante = 1500;
 let intervalo = null;
+let flagStart = false;
+
+function alterTimer(operacao) {
+    let timerStrToInt = tempoRestante / 60 ;
+
+    if (operacao === "+"){
+        if (timerStrToInt < 45){
+            timerStrToInt = parseInt(timer.textContent.charAt(0) + timer.textContent.charAt(1), 10);
+            tempoRestante = (timerStrToInt + 5) * 60;
+            updateTimer();
+        }
+    } else {
+        if (timerStrToInt > 20){
+            timerStrToInt = parseInt(timer.textContent.charAt(0) + timer.textContent.charAt(1), 10);
+            tempoRestante = (timerStrToInt - 5) * 60;
+            updateTimer();
+        }
+    }
+}
 
 function updateTimer() {
     const minutos = Math.floor(tempoRestante / 60);
@@ -16,6 +37,7 @@ function updateTimer() {
 
 function startTimer() {
     if (intervalo !== null) return;
+    plus.disabled = min.disabled = true;
 
     intervalo = setInterval(() => {
         tempoRestante--;
@@ -42,11 +64,21 @@ function resetTimer() {
     clearInterval(intervalo);
     intervalo = null;
     tempoRestante = 1500;
+    plus.disabled = min.disabled = false;
+
     updateTimer();
 }
 
 start.addEventListener("click", startTimer);
 stop.addEventListener("click", stopTimer);
 reset.addEventListener("click", resetTimer);
+
+plus.addEventListener("click", () => {
+    alterTimer("+")
+});
+
+min.addEventListener("click", () => {
+    alterTimer("-")
+});
 
 updateTimer();
