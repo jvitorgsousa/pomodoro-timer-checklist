@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 
+
 <head>
     <meta charset="UTF-8">
     <title>Focatto | Criar Conta</title>
@@ -12,9 +13,10 @@
     <div class="container">
         <div class="left">
             <div class="logo">
-                <div class="icon">⏱</div>
-                <h1>Focatto</h1>
+                <div class="icon"><img src="Images/clock.png" alt="Ícone Focatto" width="115px" height="115px"></div>
             </div>
+
+            <h1>Focatto</h1>
 
             <p class="subtitle">
                 Aumente sua produtividade com a técnica Pomodoro.<br>
@@ -38,10 +40,11 @@
         </div>
 
         <div class="right">
+            <div class="form-card">
             <h2>Criar Conta</h2>
             <p>Preencha seus dados para começar a usar o Focatto</p>
 
-            <form>
+            <form id="formCadastro">
                 <label>Nome completo</label>
                 <input type="text" placeholder="Digite seu nome">
 
@@ -49,10 +52,12 @@
                 <input type="email" placeholder="seu@email.com">
 
                 <label>Senha</label>
-                <input type="password" placeholder="Mínimo 8 caracteres">
+                <input type="password" id="senha" placeholder="Mínimo 8 caracteres">
 
                 <label>Confirmar senha</label>
-                <input type="password" placeholder="Digite a senha novamente">
+                <input type="password" id="confirmar-senha" placeholder="Digite a senha novamente">
+
+                <span id="erroSenha" class="erro"></span>
 
                 <button class="btn">Criar minha conta</button>
 
@@ -62,6 +67,27 @@
             </form>
         </div>
     </div>
+
+    <script>
+        const form = document.querySelector("form");
+        const senha = document.getElementById("senha");
+        const confirmarSenha = document.getElementById("confirmar-senha");
+        const erro = document.getElementById("erroSenha");
+
+        form.addEventListener("submit", function (event) {
+
+            if (senha.value !== confirmarSenha.value) {
+                event.preventDefault();
+                erro.textContent = "As senhas não coincidem.";
+                confirmarSenha.classList.add("input-erro");
+            } else {
+                erro.textContent = "";
+                confirmarSenha.classList.remove("input-erro");
+            }
+
+        });
+
+    </script>
 
 </body>
 

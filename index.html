@@ -13,9 +13,10 @@
         <!--  AQUI É SÓ DO LADO ESQUERDO -->
         <div class="left">
             <div class="logo">
-                <div class="icon">⏱</div>
-                <h1>Focatto</h1>
+                <div class="icon"><img src="Images/clock.png" alt="Ícone Focatto" width="115px" height="115px"></div>
             </div>
+
+            <h1>Focatto</h1>
 
             <p class="subtitle">
                 Aumente sua produtividade com a técnica Pomodoro.<br>
@@ -40,39 +41,43 @@
 
         <!-- AQUI SÓ PARA O LADO DIREITO -->
         <div class="right">
-            <h2>Bem-vindo de volta!</h2>
-            <p>Entre com suas credenciais para continuar</p>
+            <div class="form-card">
 
-            <form>
-                <label>Email</label>
-                <input type="email" placeholder="seu@email.com">
-
-                <div class="row">
-                    <label>Senha</label>
-                    <a href="#">Esqueceu a senha?</a>
-                </div>
-                <input type="password" placeholder="Digite sua senha">
-
-                <div class="checkbox">
-                    <input type="checkbox">
-                    <span>Manter-me conectado</span>
-                </div>
-
-                <button class="btn">Entrar</button>
-
-                <div class="divider">ou</div>
-
+                <h2>Bem-vindo de volta!</h2>
+                <p>Entre com suas credenciais para continuar</p>
+        
+                <form>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+        
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" placeholder="Digite sua senha" required>
+        
+                    <div class="row">
+                        <a href="#">Esqueceu a senha?</a>
+                    </div>
+        
+                    <div class="checkbox">
+                        <input type="checkbox" id="lembrar">
+                        <label for="lembrar">Manter-me conectado</label>
+                    </div>
+        
+                    <button type="submit" class="btn">Entrar</button>
+                </form>
+        
+                <div class="divider"> ou </div>
+        
                 <div class="social">
-                    <button>Google</button>
-                    <button>GitHub</button>
+                    <button class="btn-google" onclick="entrarComGoogle()">Google</button>
+                    <button class="btn-github" onclick="entrarComGithub()">GitHub</button>
                 </div>
-
-                <p class="footer">
+        
+                <div class="footer">
                     Não tem uma conta? <a href="register.html">Criar conta</a>
-                </p>
-            </form>
+                </div>
+        
+            </div>
         </div>
-    </div>
 
 </body>
 

@@ -5,6 +5,12 @@
     font-family: Arial, sans-serif;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800;900&display=swap');
+
+* {
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
 body {
     background: #fff5ef;
     min-height: 100vh;
@@ -14,20 +20,16 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: row;
-    /* lado a lado em desktop */
 }
 
-/* LADO ESQUERDO - PROMOCIONAL (igual à foto da esquerda) */
+/* LADO ESQUERDO  */
 .left {
     width: 45%;
-    background: #f7e6dd;
-    /* mesmo fundo */
+    background: #fff5ef;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* centraliza vertical */
     align-items: center;
-    /* centraliza horizontal */
     padding: 40px;
     text-align: center;
 }
@@ -35,38 +37,35 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 2px;
+    margin-bottom: 10px;
+    
 }
 
 .icon {
-    width: 90px;
-    /* um pouco maior, como na foto */
-    height: 90px;
+    width: 140px;
+    height: 140px;
     background: linear-gradient(135deg, #ff3b30, #ff6a00);
-    /* gradiente laranja/vermelho */
     border-radius: 50%;
     color: white;
-    font-size: 70px;
-    /* relógio maior */
+    font-size: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 8px 20px rgba(255, 59, 48, 0.3);
-    /* sombra suave pra destacar */
+    flex-shrink: 0;
 }
 
 .left h1 {
     color: #ff3b30;
-    font-size: 48px;
-    /* maior e impactante */
+    font-size: 60px;
     font-weight: bold;
 }
 
 .subtitle {
-    margin: 20px 0 40px;
+    margin: 27px 0 40px;
     color: #555;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.6;
     max-width: 80%;
 }
@@ -80,10 +79,10 @@ body {
 
 .card {
     background: white;
-    padding: 20px 30px;
-    border-radius: 16px;
+    padding: 18px 27px;
+    border-radius: 14px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-    min-width: 120px;
+    min-width: 100px;
     text-align: center;
 }
 
@@ -99,10 +98,22 @@ body {
     color: #777;
 }
 
-/* LADO DIREITO - FORMULÁRIO */
+/* LADO DIREITO*/
+
+.form-card {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    padding: 48px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    text-align: left;
+}
+
+
 .right {
     width: 55%;
-    background: white;
+    background: #fff5ef;
     padding: 40px 20px;
     display: flex;
     flex-direction: column;
@@ -134,7 +145,7 @@ input {
     padding: 14px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .row {
@@ -142,9 +153,15 @@ input {
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
+    text-align: right;
 }
 
 .row a {
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
     color: #ff3b30;
     text-decoration: none;
     font-size: 14px;
@@ -160,9 +177,8 @@ input {
 }
 
 .checkbox input[type="checkbox"] {
-    width: 18px;
-    /* tamanho bom pro checkbox */
-    height: 18px;
+    width: 20px;
+    height: 20px;
     accent-color: #ff3b30;
     cursor: pointer;
 }
@@ -186,10 +202,24 @@ input {
 }
 
 .divider {
+    display: flex;
+    align-items: center;
     text-align: center;
-    margin: 25px 0;
-    color: #aaa;
-    font-size: 14px;
+    margin: 1.5rem 0;
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+}
+
+.divider span {
+    padding: 0 1.2rem;
+    white-space: nowrap;
 }
 
 .social {
@@ -199,13 +229,24 @@ input {
 
 .social button {
     flex: 1;
-    padding: 14px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background: white;
-    cursor: pointer;
-    font-size: 15px;
+        padding: 14px 14px 14px 45px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: white;
+        cursor: pointer;
+        font-size: 15px;
+
+        background-repeat: no-repeat;
+        background-position: 85px center;
+        background-size: 18px 18px;
 }
+
+.btn-google {
+            background-image: url("Images/google_logo_icon_145227.png");
+        }
+.btn-github {
+            background-image: url("Images/github_icon.png");
+        }
 
 .footer {
     text-align: center;
@@ -219,6 +260,18 @@ input {
     text-decoration: none;
     font-weight: bold;
 }
+
+.erro {
+    color: red;
+    font-size: 13px;
+    margin-top: 5px;
+    display: block;
+}
+
+.input-erro {
+    border: 1px solid red;
+}
+
 
 /* PARA QUANDO DIMINUIR A TELA, O LADO ESQUERDO FICAR EM CIMA 
 E O DIREITO IR PARA BAIXO - RESPONSIVIDADE*/
