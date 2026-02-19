@@ -6,9 +6,10 @@ const timer = document.querySelector(".timer");
 const plus = document.getElementById("timer-plus");
 const min = document.getElementById("timer-min");
 
-let tempoRestante = 1500;
+let tempoRestante = 2;
 let intervalo = null;
-let flagStart = false;
+let breakerFlag = true;
+let breakerCount = 0;
 
 function alterTimer(operacao) {
     let timerStrToInt = tempoRestante / 60 ;
@@ -43,16 +44,37 @@ function startTimer() {
         tempoRestante--;
         updateTimer();
 
-        if (tempoRestante <= 0) {
+        if (tempoRestante == 0) {
             clearInterval(intervalo);
             intervalo = null;
             alert("Tempo encerrado!");
+            startBreak();
         }
     }, 1000);
+}
 
-    if (tempoRestante == 0) {
+function startBreak() {
+    tempoRestante = 5;
+
+    if (breakerFlag == false){
+        console.log("EM POMODORO")
+
+        breakerFlag = true;
         resetTimer();
+    } else {
+        breakerCount += 1;
+        document.getElementById("intervalo").innerHTML = `intervalo ${breakerCount}` 
+        updateTimer();
+        console.log("EM INTERVALO")
+        console.log(breakerFlag)
+        
+        breakerFlag = false;
     }
+}
+
+function flushBreakCounter() {
+    document.getElementById("intervalo").innerHTML = `intervalo` 
+    breakerCount = 0;
 }
 
 function stopTimer() {
@@ -63,20 +85,24 @@ function stopTimer() {
 function resetTimer() {
     clearInterval(intervalo);
     intervalo = null;
-    tempoRestante = 1500;
+    tempoRestante = 2;
     plus.disabled = min.disabled = false;
-
+    
     updateTimer();
 }
 
 start.addEventListener("click", startTimer);
 stop.addEventListener("click", stopTimer);
-reset.addEventListener("click", resetTimer);
+
+reset.addEventListener("click", () =>{
+    resetTimer();
+    flushBreakCounter();
+    breakerFlag = true;  
+});
 
 plus.addEventListener("click", () => {
     alterTimer("+")
 });
-
 min.addEventListener("click", () => {
     alterTimer("-")
 });
