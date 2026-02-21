@@ -69,22 +69,71 @@
     </div>
 
     <script>
-        const form = document.querySelector("form");
-        const senha = document.getElementById("senha");
-        const confirmarSenha = document.getElementById("confirmar-senha");
-        const erro = document.getElementById("erroSenha");
+        const form = document.getElementById('formCadastro');
+        const senhaInput = document.getElementById('senha');
+        const confirmarInput = document.getElementById('confirmar-senha');
+        const erroSpan = document.getElementById('erroSenha');
 
-        form.addEventListener("submit", function (event) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+        
+            // Limpa erros anteriores
+            erroSpan.textContent = '';
+            erroSpan.style.color = 'red';
+            confirmarInput.classList.remove('input-erro');
+            senhaInput.classList.remove('input-erro');
 
-            if (senha.value !== confirmarSenha.value) {
-                event.preventDefault();
-                erro.textContent = "As senhas não coincidem.";
-                confirmarSenha.classList.add("input-erro");
-            } else {
-                erro.textContent = "";
-                confirmarSenha.classList.remove("input-erro");
+            // Pega os valores
+            const nome = form.querySelector('input[type="text"]').value.trim();
+            const email = form.querySelector('input[type="email"]').value.trim();
+            const senha = senhaInput.value;
+            const confirmarSenha = confirmarInput.value;
+
+            // Validações
+            if (!nome || !email || !senha || !confirmarSenha) {
+                erroSpan.textContent = 'Preencha todos os campos obrigatórios.';
+                return;
             }
 
+            if (senha.length < 8) {
+                erroSpan.textContent = 'A senha deve ter no mínimo 8 caracteres.';
+                senhaInput.classList.add('input-erro');
+                senhaInput.focus();
+                return;
+            }
+
+            if (senha !== confirmarSenha) {
+                erroSpan.textContent = 'As senhas não coincidem.';
+                confirmarInput.classList.add('input-erro');
+                confirmarInput.focus();
+                return;
+            }
+
+            // Envia para o backend
+            try {
+                const response = await fetch('http://localhost:3000/cadastro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nome, email, senha })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Cadastro realizado com sucesso!');
+                    window.location.href = 'dashboard.html'; //MUDA AQUI TAMBÉM PARA O NOME QUE TU COLOCOU
+                } else {
+                    erroSpan.textContent = data.error || 'Erro ao cadastrar. Tente novamente.';
+                    if (data.error?.includes('Email já cadastrado')) {
+                        erroSpan.style.color = '#ff3b30';
+                    } else if (data.error?.includes('senha')){
+                        erroSpan.style.color = '#ff3b30';
+                    }
+                }
+            } catch (err) {
+                console.error('Erro completo:', err);
+                erroSpan.textContent = 'Erro ao conectar com o servidor. Verifique se o backend está rodando na porta 3000.';
+            }
         });
 
     </script>
@@ -92,3 +141,4 @@
 </body>
 
 </html>
+

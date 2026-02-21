@@ -23,6 +23,7 @@ body {
 }
 
 /* LADO ESQUERDO  */
+
 .left {
     width: 45%;
     background: #fff5ef;
@@ -273,7 +274,7 @@ input {
 }
 
 
-/* PARA QUANDO DIMINUIR A TELA, O LADO ESQUERDO FICAR EM CIMA 
+/* PARA QUANDO DIMINUIR A TELA, O LADO ESQUERDO FICAR EM CIMA
 E O DIREITO IR PARA BAIXO - RESPONSIVIDADE*/
 @media (max-width: 900px) {
     .container {
