@@ -10,7 +10,9 @@
 <body>
 
     <div class="container">
+
         <!--  AQUI É SÓ DO LADO ESQUERDO -->
+
         <div class="left">
             <div class="logo">
                 <div class="icon"><img src="Images/clock.png" alt="Ícone Focatto" width="115px" height="115px"></div>
@@ -40,6 +42,7 @@
         </div>
 
         <!-- AQUI SÓ PARA O LADO DIREITO -->
+    
         <div class="right">
             <div class="form-card">
 
@@ -104,7 +107,7 @@
                             const user = result.user;
                             console.log("Logado com Google!", user.displayName, user.email, user.uid);
                             alert("Bem-vindo, " + (user.displayName || user.email) + "!");
-                            window.location.href = "app.html";
+                            window.location.href = "app.html"; //LEMBRE DE MUDAR PARA O NOME QUE TU COLOCOU JV
                         })
                         .catch((error) => {
                             console.error("Erro no Google:", error.code, error.message);
@@ -120,7 +123,7 @@
                             const user = result.user;
                             console.log("Logado com GitHub!", user.displayName, user.email, user.uid);
                             alert("Bem-vindo, " + (user.displayName || user.email) + "!");
-                            window.location.href = "app.html";
+                            window.location.href = "app.html"; //AQUI TAMBÉM CRIA
                         })
                         .catch((error) => {
                             console.error("Erro no GitHub:", error.code, error.message);
@@ -132,7 +135,7 @@
                 auth.onAuthStateChanged((user) => {
                     if (user) {
                         console.log("Já logado:", user.email);
-                        window.location.href = "app.html";
+                        window.location.href = "app.html"; //E AQUI TAMBÉM
                     }
                 });
             
@@ -143,8 +146,9 @@
             const senhaInput = document.getElementById('senha');
             const checkboxManter = document.getElementById('lembrar');
 
-            // Cria um span para mostrar erros (se ainda não tiver, adicionamos dinamicamente)
+            // Cria um span para mostrar erros
             let erroSpan = document.querySelector('#erroLogin');
+
             if (!erroSpan) {
                 erroSpan = document.createElement('span');
                 erroSpan.id = 'erroLogin';
@@ -165,7 +169,7 @@
                 const email = emailInput.value.trim();
                 const senha = senhaInput.value;
 
-                // Validações
+                // Validações (NÃO TÁ CHECANDO DOMÍNIO REAL, SE TU QUISER MUDAR, PODE ARROCHAR)
                 if (!email || !senha) {
                     erroSpan.textContent = 'Preencha email e senha.';
                     return;
@@ -188,10 +192,9 @@
                     const data = await response.json();
 
                     if (response.ok) {
-                        // Longin feito com sucesso, data.user tem as informações do usuário
+                        // Longin feito com sucesso
                         console.log('Usuário logado:', data.user);
-
-                        // Se "Manter-me conectado" estiver marcado, salva no localStorage
+                        
                         if (checkboxManter.checked) {
                             localStorage.setItem('userLogado', JSON.stringify(data.user));
 
@@ -201,8 +204,8 @@
 
                         alert('Login realizado com sucesso! Bem-vindo de volta, ' + data.user.nome + '!');
 
-                        // Redireciona para a página principal (EU COLOQUEI COMO DASHBOARD, MAS TU COLOCA COM O NOME QUE TU TIVER COLOCADO AÍ)
-                        window.location.href = 'dashboard.html';
+                        // Redireciona para a página principal (EU COLOQUEI COMO APP, MAS TU COLOCA COM O NOME QUE TU TIVER COLOCADO AÍ)
+                        window.location.href = 'app.html';
                     } else {
                         erroSpan.textContent = data.error || 'Erro ao fazer login. Tente novamente.';
                     }

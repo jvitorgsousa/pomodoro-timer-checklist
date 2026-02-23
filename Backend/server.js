@@ -24,17 +24,17 @@ async function connectDB() {
         return connection;
     } catch (err) {
         console.error('Erro ao conectar ao MySQL:', err);
-        process.exit(1);  
+        process.exit(1);
     }
 }
 
-const db = connectDB(); 
+const db = connectDB();
 
 app.listen(3000, () => {
     console.log('Servidor backend rodando na porta 3000');
 });
 
-// Rota para CADASTRO
+//CADASTRO
 app.post('/cadastro', async (req, res) => {
     const { nome, email, senha } = req.body;
     if (!nome || !email || !senha) {
@@ -62,7 +62,7 @@ app.post('/cadastro', async (req, res) => {
     }
 });
 
-// Rota para LOGIN 
+//LOGIN
 app.post('/login', async (req, res) => {
     const { email, senha } = req.body;
     if (!email || !senha) {
