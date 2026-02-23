@@ -6,7 +6,7 @@ const timer = document.querySelector(".timer");
 const plus = document.getElementById("timer-plus");
 const min = document.getElementById("timer-min");
 
-let tempoRestante = 2;
+let tempoRestante = 1500;
 let intervalo = null;
 let breakerFlag = true;
 let breakerCount = 0;
@@ -53,8 +53,8 @@ function startTimer() {
     }, 1000);
 }
 
-function startBreak() {
-    tempoRestante = 5;
+function startBreak() { 
+    tempoRestante = 300;
 
     if (breakerFlag == false){
         console.log("EM POMODORO")
@@ -85,7 +85,7 @@ function stopTimer() {
 function resetTimer() {
     clearInterval(intervalo);
     intervalo = null;
-    tempoRestante = 2;
+    tempoRestante = 1500;
     plus.disabled = min.disabled = false;
     
     updateTimer();
