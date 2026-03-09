@@ -107,7 +107,7 @@
                             const user = result.user;
                             console.log("Logado com Google!", user.displayName, user.email, user.uid);
                             alert("Bem-vindo, " + (user.displayName || user.email) + "!");
-                            window.location.href = "app.html"; //LEMBRE DE MUDAR PARA O NOME QUE TU COLOCOU JV
+                            window.location.href = "pomo-timer/index.html";
                         })
                         .catch((error) => {
                             console.error("Erro no Google:", error.code, error.message);
@@ -123,7 +123,7 @@
                             const user = result.user;
                             console.log("Logado com GitHub!", user.displayName, user.email, user.uid);
                             alert("Bem-vindo, " + (user.displayName || user.email) + "!");
-                            window.location.href = "app.html"; //AQUI TAMBÉM CRIA
+                            window.location.href = "pomo-timer/index.html";
                         })
                         .catch((error) => {
                             console.error("Erro no GitHub:", error.code, error.message);
@@ -135,7 +135,7 @@
                 auth.onAuthStateChanged((user) => {
                     if (user) {
                         console.log("Já logado:", user.email);
-                        window.location.href = "app.html"; //E AQUI TAMBÉM
+                        window.location.href = "pomo-timer/index.html";
                     }
                 });
             
@@ -204,8 +204,8 @@
 
                         alert('Login realizado com sucesso! Bem-vindo de volta, ' + data.user.nome + '!');
 
-                        // Redireciona para a página principal (EU COLOQUEI COMO APP, MAS TU COLOCA COM O NOME QUE TU TIVER COLOCADO AÍ)
-                        window.location.href = 'app.html';
+                        // Redireciona para a página principal
+                        window.location.href = 'pomo-timer/index.html';
                     } else {
                         erroSpan.textContent = data.error || 'Erro ao fazer login. Tente novamente.';
                     }

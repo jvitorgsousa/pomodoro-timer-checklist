@@ -1,0 +1,337 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ff6b35, #ff8c00);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+/* depois a gente escolhe as cores direitinho desses debaixo */
+
+body.mode-foco {
+    background: linear-gradient(135deg, #ffecd2, #fcb69f, #ff9a8b); 
+}
+
+body.mode-pausa-curta {
+    background: linear-gradient(135deg, #a1ffce, #64e0a3, #00b894);
+}
+
+body.mode-pausa-longa {
+    background: linear-gradient(135deg, #a0d8ef, #81c7d4, #4fc3f7);
+}
+
+.mode-btn.active {
+    background: white;
+    color: inherit;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+body.mode-pausa-curta .mode-btn.active {
+    color: #00b894;
+}
+
+body.mode-pausa-longa .mode-btn.active {
+    color: #4fc3f7;
+}
+
+header {
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logo img {
+    width: 40px;
+}
+
+.settings,
+.share {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.modes {
+
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+}
+
+.mode-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    background: transparent;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.mode-btn.active {
+    background: white;
+    color: #ff6b35;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.timer-container {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 60px 80px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 600px;
+}
+
+.brain-icon {
+    width: 120px;
+    height: 120px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    font-size: 4rem;
+}
+
+.timer-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    /* espaçamento entre - , timer e + */
+    margin: 20px 0;
+}
+
+.adjust-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid white;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.adjust-btn:hover {
+    background: white;
+    color: #ff6b35;
+    transform: scale(1.1);
+}
+
+.adjust-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.timer {
+    font-size: 8rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin: 20px 0;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    margin-bottom: 40px;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.action-btn {
+    padding: 15px 40px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#start-btn {
+    background: #27ae60;
+    color: white;
+}
+
+#start-btn:hover {
+    background: #219653;
+}
+
+#reset-btn {
+    background: #e67e22;
+    color: white;
+}
+
+#reset-btn:hover {
+    background: #d35400;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.stat-card {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px 40px;
+    border-radius: 20px;
+    text-align: center;
+    min-width: 140px;
+}
+
+.stat-number {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #ffdd57;
+}
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    box-shadow: -10px 0 20px rgba(0, 0, 0, 0.2);
+    color: #333;
+}
+
+.sidebar.open {
+    width: 300px;
+}
+
+.sidebar-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #ff6b35;
+}
+
+.profile-section {
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid #ff6b35;
+}
+
+.profile-info h4 {
+    margin: 5px 0;
+    font-size: 1.3rem;
+}
+
+.profile-info p {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.logout-btn {
+    width: 100%;
+    padding: 12px;
+    background: #ff6b35;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.3s;
+}
+
+.logout-btn:hover {
+    background: #e55a2c;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s;
+    z-index: 999;
+}
+
+.overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+body.sidebar-open {
+    overflow: hidden;
+}

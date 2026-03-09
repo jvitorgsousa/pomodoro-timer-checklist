@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focatto - Pomodoro</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Isso é para esses ícones de fonte (para ▶, ↺, etc.) ficarem bonitinhos >-< -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-stopwatch" style="color: #ff6b35;"></i> Focatto
+        </div>
+        <div class="header-icons">
+            <i id="settings-icon" class="fas fa-cog settings"></i>
+            <i class="fas fa-share-alt share"></i>
+        </div>
+    </header>
+
+    <!-- Barra lateral de cria -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <button id="close-sidebar" class="close-btn">&times;</button>
+            <h3>Perfil</h3>
+        </div>
+    
+        <div class="profile-section">
+            <img src="https://via.placeholder.com/80" alt="Foto do usuário" class="profile-img">
+            <div class="profile-info">
+                <h4 id="user-name">Vitória</h4> <!-- tem que puxar do login depois -->
+                <p id="user-email">tvaresvitoria1234@gmail.com</p>
+            </div>
+        </div>
+    
+        <div class="sidebar-footer">
+            <button id="logout-btn" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Sair da conta
+            </button>
+        </div>
+    </div>
+    
+    <!-- Overlay escuro quando sidebar aberta -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Modos / Tabs -->
+    <div class="modes">
+        <button class="mode-btn active" data-mode="foco">Foco</button>
+        <button class="mode-btn" data-mode="pausa-curta">Pausa Curta</button>
+        <button class="mode-btn" data-mode="pausa-longa">Pausa Longa</button>
+    </div>
+
+    <!-- Container principal do timer -->
+    <div class="timer-container">
+        <div class="brain-icon">🧠</div> <!-- Pelo amor de Deus, procure um íncone menos chamativo -->
+
+        <div class="timer-wrapper">
+            <button id="decrease-time" class="adjust-btn">-</button>
+            <p class="timer">25:00</p>
+            <button id="increase-time" class="adjust-btn">+</button>
+        </div>
+
+        <p class="subtitle">Tempo de Foco</p>
+
+        <!-- Botões de ação -->
+        <div class="actions">
+            <button id="timer-start" class="action-btn">
+                <i class="fas fa-play"></i> Iniciar
+            </button>
+
+            <button id="timer-reset" class="action-btn">
+                <i class="fas fa-redo"></i> Reiniciar
+            </button>
+        </div>
+    
+        <!-- Contadores -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Sessões Completas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Minutos de Foco</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Ciclos Completos</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
