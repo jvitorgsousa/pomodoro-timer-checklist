@@ -28,13 +28,32 @@
             <button id="close-sidebar" class="close-btn">&times;</button>
             <h3>Perfil</h3>
         </div>
-    
-        <div class="profile-section">
-            <img src="https://via.placeholder.com/80" alt="Foto do usuário" class="profile-img">
-            <div class="profile-info">
-                <h4 id="user-name">Vitória</h4> <!-- tem que puxar do login depois -->
-                <p id="user-email">tvaresvitoria1234@gmail.com</p>
+
+        <div class="sidebar-profile">
+            <img class="profile-img" src="https://via.placeholder.com/80" alt="Foto do usuário">
+        
+            <h4 id="user-name">Carregando...</h4>
+            <p id="user-email">...</p>
+        </div>
+
+        <!-- Esses terem não estão funcionando, por enquanto, mas temos que fazer funcionar -->
+        <div class="profile-stats">
+        
+            <div class="stat-item">
+                <span>🔥</span>
+                120 minutos focados hoje
             </div>
+        
+            <div class="stat-item">
+                <span>🍅</span>
+                8 sessões concluídas
+            </div>
+        
+            <div class="stat-item">
+                <span>🏆</span>
+                3 dias seguidos focando
+            </div>
+        
         </div>
     
         <div class="sidebar-footer">
@@ -93,6 +112,92 @@
             </div>
         </div>
     </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBgH4qv7kq5SEdMkOPqHvICZeGV8bPCqIo",
+            authDomain: "focattoprojeto.firebaseapp.com",
+            projectId: "focattoprojeto",
+            storageBucket: "focattoprojeto.firebasestorage.app",
+            messagingSenderId: "633395578221",
+            appId: "1:633395578221:web:db9e05a09b8754f7728664",
+            measurementId: "G-L5C3G8J4HL"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        const auth = firebase.auth();
+
+        // Função que atualiza a sidebar com dados
+        function atualizarPerfil(user) {
+            const nomeElemento = document.getElementById("user-name");
+            const emailElemento = document.getElementById("user-email");
+            const fotoElemento = document.querySelector(".profile-img");
+
+            if (user) {
+
+                let nome = user.displayName;
+
+                if (!nome && user.email) {
+                    nome = user.email.split("@")[0];
+                }
+
+                if (nome) {
+                    nome = nome.split(" ")[0];
+                }
+
+                nomeElemento.textContent = nome;
+
+                // pegar email
+                let email = user.email;
+
+                if (!email && user.providerData && user.providerData.length > 0) {
+                    email = user.providerData[0].email;
+                }
+
+                emailElemento.textContent = email || "Email não disponível";
+
+                if (user.photoURL) {
+                    fotoElemento.src = user.photoURL;
+                } else {
+                    const inicial = nome.charAt(0).toUpperCase();
+                    fotoElemento.src = "https://ui-avatars.com/api/?name=" + inicial;
+                }
+
+            } else {
+                // Não está logado
+                nomeElemento.textContent = "Faça login";
+                emailElemento.textContent = "Para acessar o perfil";
+                fotoElemento.src = "https://ui-avatars.com/api/?name=?";
+                fotoElemento.alt = "Usuário não logado";
+            }
+        }
+
+        // Atualiza sempre que o estado de autenticação muda (carrega página, login, logout)
+        auth.onAuthStateChanged((user) => {
+            console.log(user.providerData);
+            atualizarPerfil(user);
+        });
+
+        // Logout
+        window.addEventListener("DOMContentLoaded", () => {
+
+                const logoutBtn = document.getElementById("logout-btn");
+
+                logoutBtn.addEventListener("click", () => {
+                    auth.signOut().then(() => {
+                        window.location.href = "/FocattoProjeto/cadastro/index.html";
+                    });
+
+                });
+
+            });
+    </script>
 
     <script src="app.js"></script>
 </body>
