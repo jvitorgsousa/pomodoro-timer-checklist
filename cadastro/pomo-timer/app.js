@@ -13,6 +13,12 @@ const sidebar = document.getElementById("sidebar");
 const closeBtn = document.getElementById("close-sidebar");
 const overlay = document.getElementById("overlay");
 const logoutBtn = document.getElementById("logout-btn");
+const focusEndSound = new Audio("../sounds/faaah.mp3");
+const breakEndSound = new Audio("../sounds/chicken-on-tree-screaming.mp3");
+const modeIcon = document.getElementById("mode-icon");
+const profileMinutes = document.getElementById("profile-minutes");
+const profileSessions = document.getElementById("profile-sessions");
+const profileStreak = document.getElementById("profile-streak");
 
 
 let tempoRestante = 25 * 60;
@@ -21,19 +27,32 @@ let isWorking = true;
 let completedSessions = 0;
 let totalFocusMinutes = 0;
 let completedCycles = 0;
+let focusSessionMinutes = 25;
 
 const times = {
-    foco: 25,
-    "pausa-curta": 5,
-    "pausa-longa": 15
+    foco: 0.1,
+    "pausa-curta": 0.1,
+    "pausa-longa": 0.1
 };
 
 const body = document.body;
+
 
 function openSidebar() {
     sidebar.classList.add("open");
     overlay.classList.add("show");
     document.body.classList.add("sidebar-open");
+}
+
+function loadStats() {
+
+    completedSessions = parseInt(localStorage.getItem("sessions")) || 0;
+    totalFocusMinutes = parseInt(localStorage.getItem("minutes")) || 0;
+    completedCycles = parseInt(localStorage.getItem("cycles")) || 0;
+
+    statsSessions.textContent = completedSessions;
+    statsMinutes.textContent = totalFocusMinutes;
+    statsCycles.textContent = completedCycles;
 }
 
 // Função para fechar barra lateral
@@ -55,7 +74,6 @@ if (overlay) {
     overlay.addEventListener("click", closeSidebar);
 }
 
-// Logout (ainda falta autenticar com o Firebase) tenho que ver isso
 if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
         if (confirm("Deseja realmente sair da conta?")) {
@@ -89,6 +107,27 @@ function changeMode(mode) {
 
     updateTimer();
     stopTimer();
+
+    if (mode === "foco") {
+
+        modeIcon.textContent = "🧠";
+        subtitle.textContent = "Tempo de Foco";
+
+    }
+
+    if (mode === "pausa-curta") {
+
+        modeIcon.textContent = "⏰";
+        subtitle.textContent = "Pausa Curta";
+
+    }
+
+    if (mode === "pausa-longa") {
+
+        modeIcon.textContent = "💤";
+        subtitle.textContent = "Pausa Longa";
+
+    }
 }
 
 // Ajusta tempo manualmente
@@ -113,36 +152,100 @@ function adjustTime(delta) {
 
 // Inicia o timer
 function startTimer() {
+
     if (intervalo !== null) return;
 
+    focusSessionMinutes = Math.floor(tempoRestante / 60);
+
     intervalo = setInterval(() => {
+
         tempoRestante--;
 
+        updateTimer();
+
         if (tempoRestante <= 0) {
-            clearInterval(intervalo);
-            intervalo = null;
-            alert(isWorking ? "Foco terminado! Hora da pausa." : "Pausa terminada! Volte ao foco.");
-
-            if (isWorking) {
-                completedSessions++;
-                totalFocusMinutes += times.foco;
-                statsSessions.textContent = completedSessions;
-                statsMinutes.textContent = totalFocusMinutes;
-
-                if (completedSessions % 4 === 0) {
-                    completedCycles++;
-                    statsCycles.textContent = completedCycles;
-                    changeMode("pausa-longa");
-                } else {
-                    changeMode("pausa-curta");
-                }
-            } else {
-                changeMode("foco");
-            }
+            finishSession();
         }
 
-        updateTimer();
     }, 1000);
+}
+
+function finishSession() {
+
+    clearInterval(intervalo);
+    intervalo = null;
+
+    toggleAdjustButtons(false);
+
+    // SE ESTAVA EM FOCO
+    if (isWorking) {
+
+        completedSessions++; // conta sessão
+        totalFocusMinutes += times.foco;
+        
+
+        // verifica ciclo
+        if (completedSessions % 4 === 0) {
+            completedCycles++;
+            statsCycles.textContent = completedCycles;
+
+            changeMode("pausa-longa");
+        } else {
+            changeMode("pausa-curta");
+        }
+
+        statsSessions.textContent = completedSessions;
+        statsMinutes.textContent = Math.round(totalFocusMinutes);
+
+        profileMinutes.textContent = Math.round(totalFocusMinutes);
+        profileSessions.textContent = completedSessions;
+        profileStreak.textContent = completedSessions; // ou lógica para calcular a sequência
+
+
+        saveStats();
+
+        focusEndSound.currentTime = 0;
+        focusEndSound.play();
+
+        showNotification("Foco terminado! Hora da pausa.");
+
+        statsSessions.textContent = completedSessions;
+
+        // decide pausa
+        if (completedSessions % 4 === 0) {
+
+            completedCycles++;
+            statsCycles.textContent = completedCycles;
+            saveStats();
+
+            changeMode("pausa-longa");
+
+        } else {
+
+            changeMode("pausa-curta");
+
+        }
+
+    }
+
+    // SE ESTAVA EM PAUSA
+    else {
+
+        breakEndSound.currentTime = 0;
+        breakEndSound.play();
+
+        showNotification("Pausa terminada! Volte ao foco.");
+
+        changeMode("foco");
+
+    }
+
+}
+
+function saveStats() {
+    localStorage.setItem("sessions", completedSessions);
+    localStorage.setItem("minutes", totalFocusMinutes);
+    localStorage.setItem("cycles", completedCycles);
 }
 
 // Para o timer
@@ -160,8 +263,15 @@ function resetTimer() {
     isWorking = true;
     subtitle.textContent = "Tempo de Foco";
     updateTimer();
+
     body.classList.remove("mode-pausa-curta", "mode-pausa-longa");
     body.classList.add("mode-foco");
+
+    localStorage.removeItem("sessions");
+    localStorage.removeItem("minutes");
+    localStorage.removeItem("cycles");
+
+    toggleAdjustButtons(false);
 }
 
 // Desabilita/abilita botões de ajustar tempo
@@ -197,4 +307,8 @@ if (increaseBtn) increaseBtn.addEventListener("click", () => adjustTime(5));
 if (decreaseBtn) decreaseBtn.addEventListener("click", () => adjustTime(-5));
 
 // Inicializa no modo Foco (depois tem que ajeitar para ir para os outros modos quando estiver neles)
-changeMode("foco");
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadStats();
+    changeMode("foco");
+});
