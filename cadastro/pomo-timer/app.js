@@ -1,19 +1,24 @@
-const startBtn = document.getElementById("timer-start");
-const resetBtn = document.getElementById("timer-reset");
-const timerDisplay = document.querySelector(".timer");
-const subtitle = document.querySelector(".subtitle");
-const statsSessions = document.querySelectorAll(".stat-number")[0];
-const statsMinutes = document.querySelectorAll(".stat-number")[1];
-const statsCycles = document.querySelectorAll(".stat-number")[2];
-const modeButtons = document.querySelectorAll(".mode-btn");
-const increaseBtn = document.getElementById("increase-time");
-const decreaseBtn = document.getElementById("decrease-time");
-const settingsIcon = document.getElementById("settings-icon");
-const sidebar = document.getElementById("sidebar");
-const closeBtn = document.getElementById("close-sidebar");
-const overlay = document.getElementById("overlay");
-const logoutBtn = document.getElementById("logout-btn");
+const startBtn = document.getElementById("timer-start") || document.createElement('div');
+const resetBtn = document.getElementById("timer-reset") || document.createElement('div');
+const timerDisplay = document.querySelector(".timer") || document.createElement('div');
+const subtitle = document.querySelector(".subtitle") || document.createElement('div');
+const statsSessions = document.querySelectorAll(".stat-number")[0] || document.createElement('div');
+const statsMinutes = document.querySelectorAll(".stat-number")[1] || document.createElement('div');
+const statsCycles = document.querySelectorAll(".stat-number")[2] || document.createElement('div');
 
+const modeButtons = document.querySelectorAll(".mode-btn").length > 0 
+    ? document.querySelectorAll(".mode-btn") 
+    : [document.createElement('div')];
+
+const increaseBtn = document.getElementById("increase-time") || document.createElement('div');
+const decreaseBtn = document.getElementById("decrease-time") || document.createElement('div');
+const settingsIcon = document.getElementById("settings-icon") || document.createElement('div');
+const sidebar = document.getElementById("sidebar") || document.createElement('div');
+const closeBtn = document.getElementById("close-sidebar") || document.createElement('div');
+const overlay = document.getElementById("overlay") || document.createElement('div');
+const logoutBtn = document.getElementById("logout-btn") || document.createElement('div');
+
+// precisei mudar todas as variáveis pra que o vitest parasse de dar erro
 
 let tempoRestante = 25 * 60;
 let intervalo = null;
@@ -69,7 +74,11 @@ if (logoutBtn) {
 function updateTimer() {
     const minutos = Math.floor(tempoRestante / 60);
     const segundos = tempoRestante % 60;
-    timerDisplay.textContent = `${String(minutos).padStart(2, "0")}:${String(segundos).padStart(2, "0")}`;
+    // fix pro vitest
+    const display = document.querySelector(".timer");
+    if (display) {
+        display.textContent = `${String(minutos).padStart(2, "0")}:${String(segundos).padStart(2, "0")}`;
+    }
 }
 
 // Muda o modo (Foco / Pausa Curta / Pausa Longa)
@@ -198,3 +207,15 @@ if (decreaseBtn) decreaseBtn.addEventListener("click", () => adjustTime(-5));
 
 // Inicializa no modo Foco (depois tem que ajeitar para ir para os outros modos quando estiver neles)
 changeMode("foco");
+
+
+// exportar as funções pro vitest
+export { 
+    tempoRestante, 
+    startTimer, 
+    resetTimer, 
+    changeMode, 
+    adjustTime, 
+    updateTimer, 
+    times 
+};
