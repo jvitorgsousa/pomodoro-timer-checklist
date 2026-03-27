@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Focatto | Criar Conta</title>
+    <link rel="icon" type="image/png" href="images/clock-focatto.png?v=2">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="left">
+            <div class="logo">
+                <div class="icon"><img src="Images/clock.png" alt="Ícone Focatto" width="115px" height="115px"></div>
+            </div>
+
+            <h1>Focatto</h1>
+
+            <p class="subtitle">
+                Aumente sua produtividade com a técnica Pomodoro.<br>
+                Organize seu tempo, alcance seus objetivos.
+            </p>
+
+            <div class="stats">
+                <div class="card">
+                    <strong>25</strong>
+                    <span>min foco</span>
+                </div>
+                <div class="card">
+                    <strong>5</strong>
+                    <span>min pausa</span>
+                </div>
+                <div class="card">
+                    <strong>4</strong>
+                    <span>ciclos</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="form-card">
+            <h2>Criar Conta</h2>
+            <p>Preencha seus dados para começar a usar o Focatto</p>
+
+            <form id="formCadastro">
+                <label>Nome completo</label>
+                <input type="text" placeholder="Digite seu nome">
+
+                <label>Email</label>
+                <input type="email" placeholder="seu@email.com">
+
+                <label>Senha</label>
+                <input type="password" id="senha" placeholder="Mínimo 8 caracteres">
+
+                <label>Confirmar senha</label>
+                <input type="password" id="confirmar-senha" placeholder="Digite a senha novamente">
+
+                <span id="erroSenha" class="erro"></span>
+
+                <button class="btn">Criar minha conta</button>
+
+                <p class="footer">
+                    Já possui uma conta? <a href="index.html">Fazer login</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('formCadastro');
+        const senhaInput = document.getElementById('senha');
+        const confirmarInput = document.getElementById('confirmar-senha');
+        const erroSpan = document.getElementById('erroSenha');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+        
+            // Limpa erros anteriores
+            erroSpan.textContent = '';
+            erroSpan.style.color = 'red';
+            confirmarInput.classList.remove('input-erro');
+            senhaInput.classList.remove('input-erro');
+
+            // Pega os valores
+            const nome = form.querySelector('input[type="text"]').value.trim();
+            const email = form.querySelector('input[type="email"]').value.trim();
+            const senha = senhaInput.value;
+            const confirmarSenha = confirmarInput.value;
+
+            // Validações (MESMA COISA DO OUTRO VIU JV)
+            if (!nome || !email || !senha || !confirmarSenha) {
+                erroSpan.textContent = 'Preencha todos os campos obrigatórios.';
+                return;
+            }
+
+            if (senha.length < 8) {
+                erroSpan.textContent = 'A senha deve ter no mínimo 8 caracteres.';
+                senhaInput.classList.add('input-erro');
+                senhaInput.focus();
+                return;
+            }
+
+            if (senha !== confirmarSenha) {
+                erroSpan.textContent = 'As senhas não coincidem.';
+                confirmarInput.classList.add('input-erro');
+                confirmarInput.focus();
+                return;
+            }
+
+            // Envia para o backend
+            try {
+                const response = await fetch('http://localhost:3000/cadastro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nome, email, senha })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Cadastro realizado com sucesso!');
+                    window.location.href = 'pomo-timer/index.html';
+                } else {
+                    erroSpan.textContent = data.error || 'Erro ao cadastrar. Tente novamente.';
+                    if (data.error?.includes('Email já cadastrado')) {
+                        erroSpan.style.color = '#ff3b30';
+                    } else if (data.error?.includes('senha')){
+                        erroSpan.style.color = '#ff3b30';
+                    }
+                }
+            } catch (err) {
+                console.error('Erro completo:', err);
+                erroSpan.textContent = 'Erro ao conectar com o servidor. Verifique se o backend está rodando na porta 3000.';
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
+
