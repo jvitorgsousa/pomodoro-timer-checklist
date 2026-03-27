@@ -20,7 +20,6 @@ const profileMinutes = document.getElementById("profile-minutes");
 const profileSessions = document.getElementById("profile-sessions");
 const profileStreak = document.getElementById("profile-streak");
 
-
 let tempoRestante = 25 * 60;
 let intervalo = null;
 let isWorking = true;
@@ -36,7 +35,6 @@ const times = {
 };
 
 const body = document.body;
-
 
 function openSidebar() {
     sidebar.classList.add("open");
@@ -54,6 +52,45 @@ function loadStats() {
     statsMinutes.textContent = totalFocusMinutes;
     statsCycles.textContent = completedCycles;
 }
+
+// TENTANDO VALIDAR TAREFAAAAAAAAAAAAAAAAAAAAAAAA
+document.getElementById('assign-task-btn').addEventListener('click', () => {
+    const taskInput = document.getElementById('task-input');
+    const taskText = taskInput.value.trim();
+
+    if (taskText === '') {
+        alert('Digite uma tarefa antes de iniciar!');
+        return; // não inicia o timer se não tiver tarefa
+    }
+
+    currentTask = taskText;
+
+    // Mostra a tarefa na tela
+    const subtitle = document.querySelector('.subtitle') || document.querySelector('h2');
+    if (subtitle) {
+        subtitle.textContent = `Foco em: ${currentTask}`;
+    }
+
+    taskInput.value = '';
+
+    startTimer();
+
+    const btn = document.getElementById('assign-task-btn');
+    const originalText = btn.textContent;
+    btn.textContent = 'Iniciando...';
+    btn.disabled = true;
+    setTimeout(() => {
+        btn.textContent = originalText;
+        btn.disabled = false;
+    }, 1500);
+});
+
+document.getElementById('timer-start').addEventListener('click', () => {
+
+    startTimer();
+
+    toggleAdjustButtons(true);
+});
 
 // Função para fechar barra lateral
 function closeSidebar() {
@@ -112,21 +149,18 @@ function changeMode(mode) {
 
         modeIcon.textContent = "🧠";
         subtitle.textContent = "Tempo de Foco";
-
     }
 
     if (mode === "pausa-curta") {
 
         modeIcon.textContent = "⏰";
         subtitle.textContent = "Pausa Curta";
-
     }
 
     if (mode === "pausa-longa") {
 
         modeIcon.textContent = "💤";
         subtitle.textContent = "Pausa Longa";
-
     }
 }
 
@@ -182,7 +216,6 @@ function finishSession() {
 
         completedSessions++; // conta sessão
         totalFocusMinutes += times.foco;
-        
 
         // verifica ciclo
         if (completedSessions % 4 === 0) {
@@ -200,7 +233,6 @@ function finishSession() {
         profileMinutes.textContent = Math.round(totalFocusMinutes);
         profileSessions.textContent = completedSessions;
         profileStreak.textContent = completedSessions; // ou lógica para calcular a sequência
-
 
         saveStats();
 
@@ -223,7 +255,6 @@ function finishSession() {
         } else {
 
             changeMode("pausa-curta");
-
         }
 
     }
